@@ -18,7 +18,6 @@ export default function UserGuest(props) {
         ¡Descubre tu próximo restaurante favorito con nuestra aplicación! 🍽✨
         </Text>
         <Text style={styles.description}>
-            
             En nuestra plataforma, explorarás una variedad increíble de restaurantes para cualquier ocasión, gusto o antojo. ¿Amante de la comida italiana, fanático de la comida rápida o en busca de la experiencia gourmet más refinada? Lo tenemos todo cubierto.
         </Text>
         <Button
@@ -28,6 +27,14 @@ export default function UserGuest(props) {
 
         onPress={()=> navigation.navigate("Login")}
         ></Button>
+        <Button
+        title='Crea tu cuenta .-.'
+        type='clear'
+        containerStyle={{ padding: 16 }}
+        onPress={() => {
+          navigation.navigate("CreateAccount");
+        }}
+      />
     </View>
   )
 }

@@ -3,20 +3,36 @@ import {StyleSheet, View, Text} from 'react-native';
 import {Input, Button, Icon, Image} from "@rneui/base";
 import Logo from '../../../../../../assets/img/mapache.jpg';
 import { isEmpty } from 'lodash';
+import Loading from '../../../../../kernel/components/Loading';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
-export default function Login() {
+export default function Login(props) {
+  const {navigation} = props;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(true);
   const [showErrorMessage, setShowErrorMessage] = useState('');
+  const [loading, setLoading] = useState(false);
+  const auth = getAuth();
 
-  const login = () => {
+  const login = async () => {
     if(!isEmpty(email) && !isEmpty(password)){
       //proceso de login
-      console.log('Listo para iniciar sesion');
-      setShowErrorMessage('');
+      //console.log('Listo para iniciar sesion c:');
+      setShowErrorMessage(" ");
+      setLoading(true);
+      try{
+        const user = await signInWithEmailAndPassword(auth, email, password)
+        navigation.navigate('UserLogged')
+      }catch (error){
+        //const errorCode = error.code;
+        //const errorMessage = error.message;
+        setShowErrorMessage('Usuario o contraseña incorrectos');
+      }finally{
+        setLoading(false);
+      }
     }else{
-      setShowErrorMessage('Campos obligatorios');
+      setShowErrorMessage('Campos obligatorios xd');
     }
   }
 
@@ -28,9 +44,10 @@ export default function Login() {
         containerStyle={styles.logoContainer}
       ></Image>
       <Input
-        placeholder="diego@gmail.com"
-        onChange={({nativeEvent: {Text}}) => setEmail(Text)}
-        label="Correo electronico *"
+        placeholder="example@utez.edu.mx"
+        onChangeText={(text) => setEmail(text)}
+
+        label="Correo electrónico *"
         labelStyle={styles.label}
         containerStyle={styles.input}
         keyboardType='email-address'
@@ -44,7 +61,8 @@ export default function Login() {
       ></Input>
       <Input
         placeholder="************"
-        onChange={({nativeEvent: {Text}}) => setPassword(Text)}
+        onChangeText={(text) => setPassword(text)}
+
         label="Contraseña *"
         labelStyle={styles.label}
         containerStyle={styles.input}
@@ -59,12 +77,14 @@ export default function Login() {
         errorMessage={showErrorMessage}
       ></Input>
 
-      <Button
-        containerStyle={styles.btnContainer}
-        title='Iniciar sesion'
+<Button
+        title="Iniciar sesión"
         onPress={login}
+        containerStyle={styles.btnContainer}
         buttonStyle={styles.btnStyle}
-      ></Button>
+      />
+
+      <Loading isShow={loading} title="Iniciando sesión"></Loading>
     </View>
   );
 }
