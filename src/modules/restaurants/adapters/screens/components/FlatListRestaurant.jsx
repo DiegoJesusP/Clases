@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
       marginBottom: 5,
       marginRight: 8,
       color: "#333",
-      textAlign: 'start',
+      textAlign: 'left',
       lineHeight: 25,
     },
     description: {

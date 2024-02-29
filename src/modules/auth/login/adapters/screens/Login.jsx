@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
   logo: {
     width: 120,
     height: 120,
-    resizeMode: 'containt',
+    resizeMode: 'cover',
     marginBottom: 16
   },
   logoContainer:{

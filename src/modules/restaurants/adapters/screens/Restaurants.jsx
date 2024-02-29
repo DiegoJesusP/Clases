@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     flex: 1,//un entero
     //justifyContent: 'start',
     //alignItems: 'start',
-    backgroundColor: '#f0f0f0', // Puedes cambiar el color de fondo según tus preferencias
+    backgroundColor: '#f0f0f0',
     padding:16,
   },
 })

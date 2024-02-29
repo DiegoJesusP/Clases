@@ -60,13 +60,13 @@ const styles = StyleSheet.create({
         fontWeight: "normal",
         marginBottom: 20,
         color: "#333",
-        textAlign: 'normal',
+        textAlign: 'auto',
         lineHeight: 20,
       },
       logo: {
         width: 120,
         height: 120,
-        resizeMode: 'containt',
+        resizeMode: 'cover',//containt
         marginBottom: 16
       },
       logoContainer:{
