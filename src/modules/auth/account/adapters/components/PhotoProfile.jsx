@@ -11,9 +11,11 @@ import * as MediaLibrary from 'expo-media-library';
 import { getAuth, updateProfile} from 'firebase/auth'
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import UsuarioPhoto from '../../../../../../assets/img/fotoPerfilNon.jpeg'
+import Loading from '../../../../../kernel/components/Loading'
 
 export default function PhotoProfile(props) {
     const { infoUser: {photoURL, displayName, email} } = props;
+    const [loading, setLoading] = useState(false);
     const uploadPhotoUrl = () =>{
         const storage = getStorage();
         getDownloadURL(ref(storage, `avatar/${uid}`)).then((url) => {
@@ -23,13 +25,13 @@ export default function PhotoProfile(props) {
     };
     const uploadImage = async (uri)=>{
         const response = await fetch(uri);
-        const {_bodyBlob} = response;
+        const blob = await response.blob();
         const storage = getStorage;
         const storageRef = ref (storage, `avatar/${uid}`)
-        return uploadBytes(storageRef, _bodyBlob);
+        return uploadBytes(storageRef, blob);
     };
     const changeAvatar = async () => {
-        const resultPermission = await MediaLibrary.requestPermissionsAsync(MediaLibrary.CAMERA)
+        const resultPermission = await MediaLibrary.requestPermissionsAsync()
         if(resultPermission.status === "granted"){
             const result = await ImagePicker.launchCameraAsync({
                 allowsEditing: true,
@@ -39,11 +41,14 @@ export default function PhotoProfile(props) {
                 //base64: true,
             });
             if(!result.canceled){
-                uploadImage(result.uri).then(()=>{
+                setLoading(true);
+                uploadImage(result.assets[0].uri).then(()=>{
                     uploadPhotoUrl();
                 }).catch((error)=>{
                     alert("Error al subir la imagen");
                     console.log('Error al subir la imagen');
+                }).finally(()=>{
+                  setLoading(false)
                 })
             }
         }else {
@@ -64,6 +69,7 @@ export default function PhotoProfile(props) {
           <Text style={styles.nombreText}>{displayName || 'Anónimo'}</Text>
           <Text style={styles.correoText}>{email || ''}</Text>
         </View>
+        <Loading isShow={loading} tittle="Cambiando foto de perfil"></Loading>
       </View>
   )
 }
