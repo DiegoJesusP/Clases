@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react'
 import { signOut } from 'firebase/auth';
 import { Button, Avatar } from '@rneui/themed';
 import PhotoProfile from '../components/PhotoProfile';
+import ActionProfile from '../components/ActionProfile';
 
 export default function Profile(props) {
   const { navigation } = props;
@@ -49,6 +50,9 @@ export default function Profile(props) {
       <Text style={styles.title}>Usted ha entrado a su Perfil</Text>
       {
         userProfile && <PhotoProfile infoUser={userProfile}></PhotoProfile>
+      }
+      {
+        userProfile && <ActionProfile infoUser={userProfile}></ActionProfile>
       }
       <Button buttonStyle={styles.btnLogout} title="Cerrar sesión" onPress={logout}></Button>
       

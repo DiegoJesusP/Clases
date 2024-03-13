@@ -12,6 +12,7 @@ import { getAuth, updateProfile} from 'firebase/auth'
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import UsuarioPhoto from '../../../../../../assets/img/fotoPerfilNon.jpeg'
 import Loading from '../../../../../kernel/components/Loading'
+//import { ListItem } from '@rneui/themed';
 
 export default function PhotoProfile(props) {
     const { infoUser: {photoURL, displayName, email} } = props;
